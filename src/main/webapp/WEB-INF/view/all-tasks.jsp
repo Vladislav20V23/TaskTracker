@@ -19,6 +19,11 @@
 
     <c:forEach var="task" items="${allTask}">
 
+        <c:url var="updateButton" value="/detailTask">
+            <c:param name="taskId" value="${task.id}"/>
+        </c:url>
+
+
         <tr>
             <td>${task.nameTask}</td>
             <td>${task.description}</td>
@@ -27,6 +32,8 @@
 
 
     </c:forEach>
+
+
 
 
 

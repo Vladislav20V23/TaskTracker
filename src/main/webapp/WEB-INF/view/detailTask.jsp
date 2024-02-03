@@ -1,27 +1,51 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="white-space" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <meta charset="utf-8" />
-    <title>Tasks</title>
+    <title>Yulia</title>
     <style>
+
+
+        .submissionfield { width: 400px; height: 80px;  border: 2px solid #999999; padding: 5px; word-break: break-word;  }
+
+        .perenos-hyphens {
+            overflow: auto;
+        }
+
+        input[type=text] {
+            width: 50%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
         .frame {
             border: 3px solid #00a8e1;
         }
-    </style>
-</head>
 
+
+
+
+
+
+
+
+
+
+
+
+
+    </style>
+
+    <meta http-equiv="charset" content="windws-1251">
+
+
+</head>
 <body>
 
-<!--Создаём таблицу контейнер, которой задаём следующее
-оформление:
-border="1" - рамка вокруг контейнера. Увеличив число, можно увеличить толщину рамки.
-align="center" - размещаем контейнер по центру экрана.
-rules="rows" - убираем двойную рамку.
-style="width:60%;" - добавляем стилевое свойства, делающее
-контейнер и весь сайт "резиновым".
-Сделать полноценный адаптивный дизайн, этим способом невозможно.-->
 <table
         border="0"
         align="center"
@@ -53,8 +77,8 @@ style="width:60%;" - добавляем стилевое свойства, де�
                     <!--Создаём столбец таблицы-->
                     <th>
                         <!--Содержание ячейки столбца-->
-                        <h1>Текущие задачи компании</h1>
-                        <h3>Здесь вы можете ознакомится с текущими задачами компании, взять их в работу и наблюдать за прогрессом выполнения</h3>
+                        <h1>Детали задачи</h1>
+                        <h3>Здесь вы можете ознакомится с задачей подробней. При необходимости сделать изменения</h3>
                         <!--Закрываем таблицу-->
                     </th>
                 </tr>
@@ -82,7 +106,7 @@ style="width:60%;" - добавляем стилевое свойства, де�
                     <td
                             rowspan="2"
                             style="width:100%" >
-                        <h2 align="left">Актуальные</h2>
+
                         <!--Начинаем абзац с красной строки-->
                         <table
                                 align="left"
@@ -90,30 +114,54 @@ style="width:60%;" - добавляем стилевое свойства, де�
                                 style="width:70%;"
                                 border="5" cellspacing="10" cellpadding="15">
 
+                            <form:form action="saveTask" modelAttribute="task" items="task">
+                                <h3>Подробно </h3>
 
-                            <tr>
-                                <th>Задача</th>
-                                <th>Описание</th>
-                                <th>Важность</th>
-                            </tr>
+                                <form:hidden path="id"/>
+<%--                                <p>    <h4>${task.nameTask}</h4>           </p>--%>
+                                <p><form:input path="nameTask" placeholder="Название задачи" class="submissionfield" /></p>
+<%--                                <p>       ${task.description}       </p>--%>
+                                <p><form:input path="description" placeholder="Описание задачи" class="submissionfield"  /> </p>
 
-                            <c:forEach var="task" items="${allTask}">
+                                <form:select path="ungency" >
+                                    <form:option value="High" label="High"></form:option>
+                                    <form:option value="Average" label="Average"></form:option>
+                                    <form:option value="Low" label="Low"></form:option>
+
+                                </form:select>
 
 
-                                <c:url var="updateButton" value="/detalInfo">
-                                    <c:param name="empId" value="${task.id}"/>
+
+
+                                <p><input type="submit" value="Ok"></p>
+
+
+
+                                <c:url var="deleteButton" value="/deleteTask">
+                                    <c:param name="taskId" value="${task.id}"/>
                                 </c:url>
 
-                                <tr>
-                                    <td><h4>${task.nameTask}</h4></td>
-                                    <td>${task.description}</td>
-                                    <td>${task.ungency}</td>
-                                    <td>
-                                        <input type="button" value="Детали" onclick="window.location.href='${updateButton}'"/>
-                                    </td>
-                                </tr>
+                                <input type="button" value="Удалить" onclick="window.location.href='${deleteButton}'"/>
 
-                            </c:forEach>
+
+                            </form:form>
+
+
+
+
+
+
+
+<%--                            <c:url var="deleteButton" value="/deleteTask">--%>
+<%--                                <c:param name="empId" value="${allTask.id}"/>--%>
+<%--                            </c:url>--%>
+
+<%--                            <input type="button" value="Удалить" onclick="window.location.href='${deleteButton}'"/>--%>
+<%--                            <h1>AAAAAAAAAAAAAAAAAa</h1>--%>
+
+
+
+
 
                         </table>
                         <!--Закрываем ячейку-->
@@ -189,6 +237,13 @@ style="width:60%;" - добавляем стилевое свойства, де�
         </td>
     </tr>
 </table>
+
+
+
+<div class="background">
+<%--    <img src="https://beskonta.ru/storage/system/resized/xy_230x196/28a6a1a8fdf4d4c4609930f031a2c6a5_d45bac6.jpg.webp"  />--%>
+</div>
+
 
 
 </body>

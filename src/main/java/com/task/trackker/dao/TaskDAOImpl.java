@@ -22,4 +22,26 @@ public class TaskDAOImpl implements TaskDAO {
 
         return allTask;
     }
+
+    @Override
+    public void saveTask(Task task) {
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(task);
+    }
+
+    @Override
+    public Task getTask(int id) {
+
+        Session session = sessionFactory.getCurrentSession();
+        Task task = session.get(Task.class, id);
+
+        return task;
+    }
+
+    @Override
+    public void deleteTask(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Task task = session.get(Task.class, id);
+        session.remove(task);
+    }
 }

@@ -19,4 +19,22 @@ public class TaskServiceImpl implements TaskService {
     public List<Task> getAllTasks() {
         return taskDAO.getAllTasks();
     }
+
+    @Override
+    @Transactional
+    public void saveTask(Task task) {
+        taskDAO.saveTask(task);
+    }
+
+    @Override
+    @Transactional
+    public Task getTask(int id) {
+        return taskDAO.getTask(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteTask(int id) {
+        taskDAO.deleteTask(id);
+    }
 }
